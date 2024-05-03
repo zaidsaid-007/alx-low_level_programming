@@ -26,7 +26,7 @@ void print_grid(int **grid, int width, int height)
         }
         printf("\n");
         h++;
-    }   
+    }
 }
 
 /**
@@ -37,16 +37,24 @@ void print_grid(int **grid, int width, int height)
 int main(void)
 {
     int **grid;
+	int i;
 
-    grid = alloc_grid(48, 32);
+    grid = alloc_grid(6, 4);
     if (grid == NULL)
     {
         return (1);
     }
-    print_grid(grid, 48, 32);
+    print_grid(grid, 6, 4);
     printf("\n");
     grid[0][3] = 98;
     grid[3][4] = 402;
     print_grid(grid, 6, 4);
+
+	/* free grid */
+	for (i = 0; i < 4; i++)
+		free(grid[i]);
+
+	free(grid);
+
     return (0);
 }

@@ -3,26 +3,23 @@
 
 /**
  * create_array - creates an array of chars,
- * and initializes it with a specific char.
- * @size: the size of the array
- * @c: initial value
+ * and initializes it with a specific char
+ * @size: size of the array to create
+ * @c: character to initialize the array with
  *
- * Return: a pointer to the array, or NULL if it fails
+ * Return: pointer to created array. Otherwise NULL if size is 0
+ * or the function fails
  */
 char *create_array(unsigned int size, char c)
 {
-	char *array;
+	char *buffer = malloc(sizeof(char) * size);
 	unsigned int i;
 
-	if (size == 0)
-		return (NULL);
-
-	array = (char *)malloc(sizeof(char) * size);
-	if (array == NULL)
+	if (buffer == NULL || size == 0)
 		return (NULL);
 
 	for (i = 0; i < size; i++)
-		array[i] = c;
+		buffer[i] = c;
 
-	return (array);
+	return (buffer);
 }

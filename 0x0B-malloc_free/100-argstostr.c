@@ -1,49 +1,70 @@
 #include "main.h"
 #include <stdlib.h>
 
+int _strlen(char *s);
+
 /**
- * argstostr - concatenates all the arguments of your program.
- * @ac: arguments count
- * @av: arguments vector
+ * argstostr - concatenates all the arguments of the program
+ * @ac: number of commandline arguments
+ * @av: array of all arguments
+ * Each argument should be followed by a \n in the new string
  *
- * Return: a pointer to a new string, or NULL if it fails
+ * Return: pointer to resulting string
+ * returns NULL if ac == 0 or av == NULL
+ * returns NULL if it fails
  */
 char *argstostr(int ac, char **av)
 {
-	char *str, *s;
-	int i, j, k, len = 0;
+	int length = 0;
+	int i, j;
+	int k = 0;
+	char *str;
 
+	/* returns NULL if ac == 0 or av == NULL */
 	if (ac == 0 || av == NULL)
 		return (NULL);
 
+	/* get the total length of all strings in av */
 	for (i = 0; i < ac; i++)
-	{
-		s = av[i];
-		j = 0;
+		length += _strlen(av[i]);
 
-		while (s[j++])
-			len++;
-		len++;
-	}
-
-	str = (char *)malloc(sizeof(char) * (len + 1));
+	/* allocate space for the new string */
+	str = malloc(sizeof(char) * (length + ac + 1));
 	if (str == NULL)
 		return (NULL);
 
-	for (i = 0, j = 0; i < ac && j < len; i++)
+	/* copy every character in every string in av to str */
+	for (i = 0; i < ac; i++)
 	{
-		s = av[i];
-		k = 0;
+		for (j = 0; av[i][j] != '\0'; j++, k++)
+			str[k] = av[i][j];
 
-		while (s[k])
-		{
-			str[j] = s[k];
-			k++;
-			j++;
-		}
-		str[j++] = '\n';
+		/* Each argument should be followed by a \n in the new string */
+		str[k] = '\n';
+		k++;
 	}
-	str[j] = '\0';
+
+	/* terminate str */
+	str[k] = '\0';
 
 	return (str);
+}
+
+/**
+ * _strlen - finds the length of a string
+ * @s: address of first character in the string
+ *
+ * Return: length og the string
+ */
+int _strlen(char *s)
+{
+	int length = 0;
+
+	while (*s)
+	{
+		length++;
+		s++;
+	}
+
+	return (length);
 }
